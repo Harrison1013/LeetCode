@@ -1,3 +1,5 @@
+package main.java;
+
 import java.util.*;
 
 public class Easy {
@@ -160,7 +162,7 @@ public class Easy {
     //27. Remove Element
     public int removeElement(int[] nums, int val) {
         int n = nums.length;
-        if(n==0){
+        if (n == 0) {
             return 0;
         }
         int fast = 0;
@@ -173,5 +175,97 @@ public class Easy {
             fast++;
         }
         return slow;
+    }
+
+    //28. Implement strStr()
+    public int strStr(String haystack, String needle) {
+        int n = haystack.length();
+        int m = needle.length();
+        for (int i = 0; i + m <= n; i++) {
+            Boolean flag = true;
+            for (int j = 0; j < m; j++) {
+                if (haystack.charAt(i + j) != needle.charAt(j)) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    //35. Search Insert Position
+    public static int searchInsert(int[] nums, int target) {
+        int n = nums.length;
+        int left = 0;
+        int right = n - 1;
+        int a = n;
+        while (left <= right) {
+            int mid = ((right - left) >> 1) + left;
+            if (target <= nums[mid]) {
+                a = mid;
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return a;
+    }
+
+    //53. Maximum Subarray
+    public int maxSubArray(int[] nums) {
+        if (nums.length == 1) {
+            return nums[0];
+        }
+        int pre = 0;
+        int max = nums[0];
+        for (int x : nums) {
+            pre = Math.max(pre + x, x);
+            max = Math.max(max, pre);
+        }
+        return max;
+    }
+
+    //58. Length of Last Word
+    public static int lengthOfLastWord(String s) {
+        int l = s.length() - 1;
+        while (s.charAt(l) == ' ') {
+            l--;
+        }
+        int r = 0;
+        while (l >= 0 && s.charAt(l) != ' ') {
+            r++;
+            l--;
+        }
+        return r;
+    }
+
+    //66. Plus One
+    public int[] plusOne(int[] digits) {
+        int l = digits.length;
+        if (digits[l - 1] != 9) {
+            digits[l - 1] += 1;
+            return digits;
+        }
+        for (int i = l - 1; i >= 0; i--) {
+            if (digits[i] != 9) {
+                digits[i] += 1;
+                for (int j = i + 1; j < l; j++) {
+                    digits[j] = 0;
+                }
+            }
+            return digits;
+        }
+        //都是9
+        digits = new int[l + 1];
+        digits[0] = 1;
+        return digits;
+    }
+
+    public static void main(String[] args) {
+
+        System.out.println(lengthOfLastWord("Hello World"));
     }
 }
